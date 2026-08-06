@@ -64,29 +64,7 @@ jobs:
             --out app_patched_signed.apk aligned.apk
           "$BT/apksigner" verify --print-certs app_patched_signed.apk || true
           ls -la app_patched_signed.apk
-      - name: Build test variant without native libs (emulator ABI)
-        run: |
-          BT=$(find tools/bt -maxdepth 1 -type d -name "android-*" | head -1)
-          APED_JAR=$(find tools/apeditor -name "APKEditor*.jar" | head -1)
-          mkdir -p split_input_nolibs
-          cp base-patched.apk split_input_nolibs/base.apk
-          cp apk/split_config.xhdpi.apk split_input_nolibs/
-          java -jar "$APED_JAR" m -i split_input_nolibs -o merged-nolibs-unsigned.apk
-          "$BT/zipalign" -f 4 merged-nolibs-unsigned.apk aligned-nolibs.apk
-          "$BT/apksigner" sign \
-            --ks keystore/release.p12 \
-            --ks-type PKCS12 \
-            --ks-key-alias release \
-            --ks-pass pass:android \
-            --key-pass pass:android \
-            --out app_patched_signed_nolibs.apk aligned-nolibs.apk
-          "$BT/apksigner" verify --print-certs app_patched_signed_nolibs.apk || true
-          ls -la app_patched_signed_nolibs.apk
       - uses: actions/upload-artifact@v4
         with:
           name: app_patched_signed
           path: app_patched_signed.apk
-      - uses: actions/upload-artifact@v4
-        with:
-          name: app_patched_signed_nolibs
-          path: app_patched_signed_nolibs.apk
