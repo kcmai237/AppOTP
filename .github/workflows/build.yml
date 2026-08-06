@@ -26,9 +26,11 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq unzip >/dev/null
           mkdir -p tools
-          curl -sL -o tools/apktool.jar https://github.com/iBotPeaches/Apktool/releases/latest/download/apktool.jar
-          APED_URL=$(curl -s https://api.github.com/repos/REAndroid/APKEditor/releases/latest | jq -r '.assets[] | select(.name|test("jar$")) | .browser_download_url' | head -1)
-          curl -sL -o /tmp/aped.zip "$APED_URL"
+          APKT_URL=$(gh api repos/iBotPeaches/Apktool/releases/latest --jq '.assets[] | select(.name|test("apktool_.*\\.jar")) | .browser_download_url' | head -1)
+          curl -fsSL -o tools/apktool.jar "$APKT_URL"
+          ls -la tools/apktool.jar
+          APED_URL=$(gh api repos/REAndroid/APKEditor/releases/latest --jq '.assets[] | select(.name|test("jar$")) | .browser_download_url' | head -1)
+          curl -fsSL -o /tmp/aped.zip "$APED_URL"
           unzip -q /tmp/aped.zip -d tools/apeditor
           curl -sL -o /tmp/bt.zip https://dl.google.com/android/repository/build-tools_r34-linux.zip
           unzip -q /tmp/bt.zip -d tools/bt
