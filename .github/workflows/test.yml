@@ -1,0 +1,51 @@
+name: Test
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'original | patched'
+        required: true
+        default: original
+      api:
+        description: 'Emulator API level'
+        required: true
+        default: '30'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bundle
+      - name: Prepare APK set
+        run: |
+          if [ "${{ inputs.mode }}" = "patched" ]; then
+            echo "APKS=apk/app_patched_signed.apk" >> "$GITHUB_ENV"
+          else
+            echo "APKS=apk/base.apk apk/split_config.armeabi_v7a.apk apk/split_config.xhdpi.apk" >> "$GITHUB_ENV"
+          fi
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ inputs.api }}
+          arch: x86_64
+          disable-animations: true
+          disk-size: 2048M
+          ram-size: 2048M
+          script: |
+            adb wait-for-device
+            adb install-multiple $APKS || true
+            adb logcat -c
+            adb shell am start -W -n com.galixo.android.virtualnumber.getcode/.MainActivity || true
+            sleep 20
+            adb logcat -d > logcat_${{ inputs.mode }}.txt
+            echo "=== top package activity ==="
+            adb shell dumpsys activity activities | grep -i "galixo\|mResumedActivity" | head -5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: logcat_${{ inputs.mode }}
+          path: logcat_${{ inputs.mode }}.txt
