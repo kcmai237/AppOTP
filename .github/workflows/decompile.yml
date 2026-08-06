@@ -26,7 +26,9 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq unzip >/dev/null
           mkdir -p tools
-          curl -sL -o tools/apktool.jar https://github.com/iBotPeaches/Apktool/releases/latest/download/apktool.jar
+          APKT_URL=$(curl -s https://api.github.com/repos/iBotPeaches/Apktool/releases/latest | jq -r '.assets[] | select(.name=="apktool.jar") | .browser_download_url' | head -1)
+          curl -sL -o tools/apktool.jar "$APKT_URL"
+          ls -la tools/apktool.jar
           JADX_URL=$(curl -s https://api.github.com/repos/skylot/jadx/releases/latest | jq -r '.assets[] | select(.name|endswith(".zip")) | .browser_download_url' | head -1)
           curl -sL -o /tmp/jadx.zip "$JADX_URL"
           unzip -q /tmp/jadx.zip -d tools/jadx
