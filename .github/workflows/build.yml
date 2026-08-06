@@ -32,8 +32,8 @@ jobs:
           curl -fsSL -o tools/apktool.jar "$APKT_URL"
           ls -la tools/apktool.jar
           APED_URL=$(gh api repos/REAndroid/APKEditor/releases/latest --jq '.assets[] | select(.name|test("jar$")) | .browser_download_url' | head -1)
-          curl -fsSL -o /tmp/aped.zip "$APED_URL"
-          unzip -q /tmp/aped.zip -d tools/apeditor
+          mkdir -p tools/apeditor
+          curl -fsSL -o tools/apeditor/APKEditor.jar "$APED_URL"
           curl -sL -o /tmp/bt.zip https://dl.google.com/android/repository/build-tools_r34-linux.zip
           unzip -q /tmp/bt.zip -d tools/bt
           find tools -name "APKEditor*.jar"
