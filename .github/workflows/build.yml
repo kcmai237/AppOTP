@@ -49,7 +49,11 @@ jobs:
         run: |
           BT=$(find tools/bt -maxdepth 1 -type d -name "android-*" | head -1)
           APED_JAR=$(find tools/apeditor -name "APKEditor*.jar" | head -1)
-          java -jar "$APED_JAR" m -i base-patched.apk apk/split_config.armeabi_v7a.apk apk/split_config.xhdpi.apk -o merged-unsigned.apk
+          mkdir -p split_input
+          cp base-patched.apk split_input/base.apk
+          cp apk/split_config.armeabi_v7a.apk split_input/
+          cp apk/split_config.xhdpi.apk split_input/
+          java -jar "$APED_JAR" m -i split_input -o merged-unsigned.apk
           "$BT/zipalign" -f 4 merged-unsigned.apk aligned.apk
           "$BT/apksigner" sign \
             --ks keystore/release.p12 \
