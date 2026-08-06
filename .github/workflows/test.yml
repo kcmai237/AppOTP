@@ -38,13 +38,21 @@ jobs:
           ram-size: 2048M
           script: |
             adb wait-for-device
+            adb shell settings put global device_provisioned 1 || true
+            adb shell settings put secure user_setup_complete 1 || true
+            adb shell wm dismiss-keyguard || true
+            adb shell input keyevent 82 || true
+            until [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; do sleep 3; done
+            adb shell settings put global package_verifier_enable 0 || true
             adb install-multiple $APKS || true
             adb logcat -c
             adb shell am start -W -n com.galixo.android.virtualnumber.getcode/.MainActivity || true
-            sleep 20
+            sleep 35
             adb logcat -d > logcat_${{ inputs.mode }}.txt
-            echo "=== top package activity ==="
-            adb shell dumpsys activity activities | grep -i "galixo\|mResumedActivity" | head -5
+            echo "=== resumed activity ==="
+            adb shell dumpsys activity activities | grep -iE "galixo|mResumedActivity" | head -5
+            echo "=== process alive? ==="
+            adb shell pidof com.galixo.android.virtualnumber.getcode || true
       - uses: actions/upload-artifact@v4
         with:
           name: logcat_${{ inputs.mode }}
