@@ -1,0 +1,62 @@
+name: Build
+on:
+  workflow_dispatch:
+    inputs:
+      patch_set:
+        description: 'Apply repo patch/ dir over decompiled output'
+        required: true
+        default: 'true'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bundle
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq unzip >/dev/null
+          mkdir -p tools
+          curl -sL -o tools/apktool.jar https://github.com/iBotPeaches/Apktool/releases/latest/download/apktool.jar
+          APED_URL=$(curl -s https://api.github.com/repos/REAndroid/APKEditor/releases/latest | jq -r '.assets[] | select(.name|test("jar$")) | .browser_download_url' | head -1)
+          curl -sL -o /tmp/aped.zip "$APED_URL"
+          unzip -q /tmp/aped.zip -d tools/apeditor
+          curl -sL -o /tmp/bt.zip https://dl.google.com/android/repository/build-tools_r34-linux.zip
+          unzip -q /tmp/bt.zip -d tools/bt
+          find tools -name "APKEditor*.jar"
+          ls tools/bt
+      - name: Decompile + apply patch + rebuild base
+        run: |
+          java -jar tools/apktool.jar d -f apk/base.apk -o decompiled
+          if [ "${{ inputs.patch_set }}" = "true" ] && [ -d patch ]; then
+            cp -rf patch/. decompiled/
+          fi
+          java -jar tools/apktool.jar b decompiled -o base-patched.apk
+      - name: Merge splits, align, sign
+        run: |
+          BT=$(find tools/bt -maxdepth 1 -type d -name "android-*" | head -1)
+          APED_JAR=$(find tools/apeditor -name "APKEditor*.jar" | head -1)
+          java -jar "$APED_JAR" m -i base-patched.apk apk/split_config.armeabi_v7a.apk apk/split_config.xhdpi.apk -o merged-unsigned.apk
+          "$BT/zipalign" -f 4 merged-unsigned.apk aligned.apk
+          "$BT/apksigner" sign \
+            --ks keystore/release.p12 \
+            --ks-type PKCS12 \
+            --ks-key-alias release \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            --out app_patched_signed.apk aligned.apk
+          "$BT/apksigner" verify --print-certs app_patched_signed.apk || true
+          ls -la app_patched_signed.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app_patched_signed
+          path: app_patched_signed.apk

@@ -1,0 +1,49 @@
+name: Decompile
+on:
+  workflow_dispatch:
+    inputs:
+      apk:
+        description: APK basename to decompile (from apk/ dir)
+        required: true
+        default: base.apk
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  decompile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bundle
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install apktool + jadx
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq unzip >/dev/null
+          mkdir -p tools
+          curl -sL -o tools/apktool.jar https://github.com/iBotPeaches/Apktool/releases/latest/download/apktool.jar
+          JADX_URL=$(curl -s https://api.github.com/repos/skylot/jadx/releases/latest | jq -r '.assets[] | select(.name|endswith(".zip")) | .browser_download_url' | head -1)
+          curl -sL -o /tmp/jadx.zip "$JADX_URL"
+          unzip -q /tmp/jadx.zip -d tools/jadx
+          ls tools/jadx
+      - name: apktool decompile
+        run: |
+          java -jar tools/apktool.jar d -f apk/${{ inputs.apk }} -o decompiled
+          (cd decompiled && zip -qr ../sources.zip .)
+      - name: jadx decompile (analysis)
+        run: |
+          tools/jadx/bin/jadx -d jadx-src apk/${{ inputs.apk }} >/dev/null 2>&1 || true
+          zip -qr jadx-src.zip jadx-src 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sources
+          path: sources.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jadx-src
+          path: jadx-src.zip
