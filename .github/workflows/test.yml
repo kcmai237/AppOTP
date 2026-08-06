@@ -25,9 +25,9 @@ jobs:
       - name: Prepare APK set
         run: |
           if [ "${{ inputs.mode }}" = "patched" ]; then
-            echo "APKS=apk/app_patched_signed.apk" >> "$GITHUB_ENV"
+            echo "APKS=apk/app_patched_signed_nolibs.apk" >> "$GITHUB_ENV"
           else
-            echo "APKS=apk/base.apk apk/split_config.armeabi_v7a.apk apk/split_config.xhdpi.apk" >> "$GITHUB_ENV"
+            echo "APKS=apk/base.apk" >> "$GITHUB_ENV"
           fi
       - uses: reactivecircus/android-emulator-runner@v2
         with:
