@@ -48,7 +48,26 @@ jobs:
             --out app_inapp_patched.apk aligned.apk
           "$BT/apksigner" verify --print-certs app_inapp_patched.apk || true
           ls -la app_inapp_patched.apk
+      - name: Build no-libs test variant (emulator ABI)
+        run: |
+          BT=$(find tools/bt -maxdepth 1 -type d -name "android-*" | head -1)
+          cp -r decompiled decompiled_nolibs
+          rm -rf decompiled_nolibs/lib
+          java -jar tools/apktool.jar b decompiled_nolibs -o inapp-nolibs-unsigned.apk
+          "$BT/zipalign" -f 4 inapp-nolibs-unsigned.apk aligned-nolibs.apk
+          "$BT/apksigner" sign \
+            --ks keystore/release.p12 \
+            --ks-type PKCS12 \
+            --ks-key-alias release \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            --out app_inapp_patched_nolibs.apk aligned-nolibs.apk
+          ls -la app_inapp_patched_nolibs.apk
       - uses: actions/upload-artifact@v4
         with:
           name: app_inapp_patched
           path: app_inapp_patched.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app_inapp_patched_nolibs
+          path: app_inapp_patched_nolibs.apk
