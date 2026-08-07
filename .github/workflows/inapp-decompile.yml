@@ -1,0 +1,44 @@
+name: InApp Decompile
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  decompile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/inapp-patch
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install apktool + jadx
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq unzip >/dev/null
+          mkdir -p tools
+          APKT_URL=$(gh api repos/iBotPeaches/Apktool/releases/latest --jq '.assets[] | select(.name|test("apktool_.*\\.jar")) | .browser_download_url' | head -1)
+          curl -fsSL -o tools/apktool.jar "$APKT_URL"
+          JADX_URL=$(gh api repos/skylot/jadx/releases/latest --jq '.assets[] | select(.name|endswith(".zip")) | .browser_download_url' | head -1)
+          curl -fsSL -o /tmp/jadx.zip "$JADX_URL"
+          unzip -q /tmp/jadx.zip -d tools/jadx
+      - name: apktool decompile (smali + resources)
+        run: |
+          java -jar tools/apktool.jar d -f apk/app_patched_signed.apk -o decompiled
+      - name: jadx decompile (java)
+        run: |
+          tools/jadx/bin/jadx -d jadx-src apk/app_patched_signed.apk >/dev/null 2>&1 || true
+      - name: Package full sources
+        run: |
+          zip -qr sources_full.zip decompiled jadx-src 2>/dev/null || true
+          ls -la sources_full.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sources_full
+          path: sources_full.zip
