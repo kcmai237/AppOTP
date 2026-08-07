@@ -1,0 +1,53 @@
+name: InApp Test
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/inapp-patch
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          arch: x86_64
+          disable-animations: true
+          disk-size: 2048M
+          ram-size: 2048M
+          script: |
+            adb wait-for-device
+            adb shell settings put global device_provisioned 1 || true
+            adb shell settings put secure user_setup_complete 1 || true
+            adb shell wm dismiss-keyguard || true
+            adb shell input keyevent 82 || true
+            until [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; do sleep 3; done
+            adb shell settings put global package_verifier_enable 0 || true
+            adb install-multiple apk/app_inapp_patched_nolibs.apk || true
+            adb logcat -c
+            adb shell am start -W -n com.galixo.android.virtualnumber.getcode/.MainActivity || true
+            sleep 40
+            adb shell uiautomator dump /sdcard/ui1.xml || true
+            adb pull /sdcard/ui1.xml || true
+            adb exec-out screencap -p > screen1.png || true
+            adb logcat -d > logcat_inapp.txt
+            echo "=== resumed activity ==="
+            adb shell dumpsys activity activities | grep -iE "galixo|mResumedActivity" | head -5
+            echo "=== process alive? ==="
+            adb shell pidof com.galixo.android.virtualnumber.getcode || true
+            echo "=== visible texts ==="
+            adb shell uiautomator dump /sdcard/uia.xml >/dev/null 2>&1 || true
+            adb shell cat /sdcard/uia.xml 2>/dev/null | grep -oE 'text="[^"]*"' | sort -u || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: inapp-test-results
+          path: |
+            logcat_inapp.txt
+            ui1.xml
+            screen1.png
+          if-no-files-found: ignore
