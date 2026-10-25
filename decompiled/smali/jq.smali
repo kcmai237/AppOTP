@@ -162,7 +162,7 @@
 
     sget-object v3, Lqf0;->o:Lqf0;
 
-    if-ne v0, v3, :return_suspended
+    if-eq v0, v3, :return_suspended
 
     :after_save
 
@@ -190,7 +190,7 @@
 
     sget-object v1, Lqf0;->o:Lqf0;
 
-    if-ne v0, v1, :return_suspended
+    if-eq v0, v1, :return_suspended
 
     :after_emit
 

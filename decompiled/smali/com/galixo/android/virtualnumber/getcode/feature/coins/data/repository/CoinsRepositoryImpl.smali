@@ -137,7 +137,7 @@
 
     sget-object v1, Lqf0;->o:Lqf0;
 
-    if-ne p1, v1, :suspended
+    if-eq p1, v1, :suspended
 
     goto :have_value
 
