@@ -5,7 +5,7 @@ import sys
 import time
 
 from assert_e2e import coins_balance, ui_texts
-from purchase_nav import dump, find, sh, tap, visible
+from purchase_nav import dump, find, nodes, sh, tap, visible
 
 PACKAGE = "com.smart.otp.app.assistant"
 DATASTORE = "/data/data/%s/files/datastore/getcode_preferences.preferences_pb" % PACKAGE
@@ -21,22 +21,33 @@ PACKS = [
 
 
 SCROLLS = [
-    ("540", "1950", "950", "800"),
-    ("1050", "1950", "950", "800"),
-    ("540", "1900", "1100", "1200"),
+    ("input", "touchscreen", "swipe", "540", "2050", "540", "700", "1500"),
+    ("input", "swipe", "540", "2050", "540", "700", "100"),
+    ("input", "swipe", "540", "1800", "540", "600", "2000"),
+    ("input", "touchscreen", "swipe", "1050", "2000", "1050", "700", "800"),
+    ("input", "roll", "0", "-3"),
 ]
+
+
+def raw_bounds(raw, target):
+    for node in nodes(raw):
+        if node["text"] == target or node["desc"] == target:
+            return node["bounds"]
+    return None
 
 
 def tap_text(target):
     raw = dump("nav")
     bounds = find(raw, target)
-    for attempt, (x, y1, y2, ms) in enumerate(SCROLLS):
+    for attempt, cmd in enumerate(SCROLLS):
         if bounds:
             break
-        sh("input", "swipe", x, y1, x, y2, ms)
+        sh(*cmd)
         time.sleep(2)
         raw = dump("nav_scroll_%d" % attempt)
         bounds = find(raw, target)
+        print("scroll %d: 70=%s target=%s" % (attempt, raw_bounds(raw, "70 Coins"), raw_bounds(raw, target)),
+              flush=True)
     if not bounds:
         print("[FAIL] target %r not found; visible=%s" % (target, visible(raw)[:25]), flush=True)
         return False
