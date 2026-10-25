@@ -1,6 +1,9 @@
 name: ms-coins
 
 on:
+  push:
+    branches:
+      - ms-update
   workflow_dispatch:
 
 permissions:
