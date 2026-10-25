@@ -326,6 +326,10 @@
 .method private final handlePurchasePlan(Ljava/lang/String;)V
     .locals 3
 
+    const-string v0, "MSCOIN-PLAN"
+
+    invoke-static {v0, p1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
     iget-object v0, p0, Lcom/galixo/android/virtualnumber/getcode/feature/buycoins/presentation/mvi/BuyCoinsViewModel;->internetManager:Lcom/galixo/android/virtualnumber/getcode/core/utils/manager/InternetManager;
 
     invoke-virtual {v0}, Lcom/galixo/android/virtualnumber/getcode/core/utils/manager/InternetManager;->isInternetConnected()Z
@@ -354,6 +358,12 @@
     check-cast v0, Lcom/android/billingclient/api/ProductDetails;
 
     if-nez v0, :cond_1
+
+    const-string v0, "MSCOIN-PLAN"
+
+    const-string v1, "product missing"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     return-void
 
