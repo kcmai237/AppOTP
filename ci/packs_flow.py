@@ -5,7 +5,7 @@ import sys
 import time
 
 from assert_e2e import coins_balance, ui_texts
-from purchase_nav import dump, find, tap, visible
+from purchase_nav import dump, find, sh, tap, visible
 
 PACKAGE = "com.smart.otp.app.assistant"
 DATASTORE = "/data/data/%s/files/datastore/getcode_preferences.preferences_pb" % PACKAGE
@@ -23,6 +23,13 @@ PACKS = [
 def tap_text(target):
     raw = dump("nav")
     bounds = find(raw, target)
+    for _ in range(2):
+        if bounds:
+            break
+        sh("input", "swipe", "540", "1800", "540", "1200", "300")
+        time.sleep(2)
+        raw = dump("nav_scroll")
+        bounds = find(raw, target)
     if not bounds:
         print("[FAIL] target %r not found; visible=%s" % (target, visible(raw)[:25]), flush=True)
         return False
