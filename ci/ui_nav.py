@@ -74,6 +74,7 @@ def pick(nodes):
                 for j in range(max(0, i - 4), min(len(nodes), i + 5)):
                     if nodes[j]["clickable"] and area(nodes[j]["bounds"]) > 0:
                         return nodes[j], "%s->clickable" % (n["text"] or n["desc"])
+                return {"bounds": (66, 2028, 1014, 2220)}, "%s->fixed-bottom" % (n["text"] or n["desc"])
     clicks = [n for n in nodes if n["clickable"] and area(n["bounds"]) > 0]
     if len(clicks) == 1:
         return clicks[0], "sole-clickable"
