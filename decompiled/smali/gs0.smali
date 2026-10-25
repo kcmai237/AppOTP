@@ -1,0 +1,21 @@
+.class public Lgs0;
+.super Lfs0;
+.source "SourceFile"
+
+
+# virtual methods
+.method public a(Landroid/view/Window;)V
+    .locals 0
+
+    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    invoke-virtual {p1}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
+
+    move-result-object p0
+
+    const/4 p1, 0x1
+
+    iput p1, p0, Landroid/view/WindowManager$LayoutParams;->layoutInDisplayCutoutMode:I
+
+    return-void
+.end method

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:height="272.0dp" android:width="360.0dp" android:autoMirrored="true" android:viewportWidth="360.0" android:viewportHeight="272.0"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt">
+    <group>
+        <clip-path android:pathData="M0,0H361V224C361,246.63 361,257.94 353.97,264.97C346.94,272 335.63,272 313,272H48C25.37,272 14.06,272 7.03,264.97C0,257.94 0,246.63 0,224V0Z" />
+        <path android:fillColor="@drawable/$appbar__0" android:pathData="M0,0H361V224C361,246.63 361,257.94 353.97,264.97C346.94,272 335.63,272 313,272H48C25.37,272 14.06,272 7.03,264.97C0,257.94 0,246.63 0,224V0Z" />
+        <path android:fillColor="#ffffff" android:pathData="M247,210C247,163.06 285.06,125 332,125V125C378.94,125 417,163.06 417,210V210C417,256.94 378.94,295 332,295V295C285.06,295 247,256.94 247,210V210Z" android:fillAlpha="0.08" />
+        <path android:fillColor="#ffffff" android:pathData="M-77,43.5C-77,-10.9 -32.9,-55 21.5,-55V-55C75.9,-55 120,-10.9 120,43.5V43.5C120,97.9 75.9,142 21.5,142V142C-32.9,142 -77,97.9 -77,43.5V43.5Z" android:fillAlpha="0.04" />
+    </group>
+</vector>

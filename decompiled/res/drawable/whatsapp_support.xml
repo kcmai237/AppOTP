@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:height="36.0dp" android:width="36.0dp" android:viewportWidth="36.0" android:viewportHeight="36.0"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt">
+    <path android:fillColor="@drawable/$whatsapp_support__0" android:pathData="M18,1C8.61,1 1,8.61 1,18C1,21.154 1.854,24.091 3.358,26.623L1,35L9.377,32.642C11.909,34.132 14.86,35 18,35C27.39,35 35,27.39 35,18C35,8.61 27.39,1 18,1Z" />
+    <path android:fillColor="#ffffff" android:pathData="M26.204,22.008L22.717,19.765C22.181,19.418 21.212,19.693 20.735,20.113C20.388,20.417 19.896,20.532 19.447,20.402C17.436,19.823 15.917,18.261 15.483,16.322C15.382,15.888 15.555,15.44 15.902,15.136C16.38,14.731 16.756,13.834 16.438,13.313L14.369,9.855C13.935,9.131 12.893,8.972 12.227,9.522L9.638,11.938C9.276,12.257 9.117,12.72 9.233,13.182C9.855,15.758 12.647,24.207 22.471,26.768C22.919,26.884 23.397,26.768 23.744,26.464L26.363,24.048C27.014,23.484 26.941,22.486 26.204,22.008Z" />
+</vector>

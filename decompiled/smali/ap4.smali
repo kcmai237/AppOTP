@@ -1,0 +1,25 @@
+.class public final Lap4;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# static fields
+.field public static final a:Lti4;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 3
+
+    sget-object v0, Lvn4;->c:Lmr3;
+
+    new-instance v1, Lti4;
+
+    const/4 v2, 0x6
+
+    invoke-direct {v1, v0, v2}, Lti4;-><init>(Lmr3;I)V
+
+    sput-object v1, Lap4;->a:Lti4;
+
+    return-void
+.end method
