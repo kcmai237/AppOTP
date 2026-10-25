@@ -104,24 +104,6 @@
 
     invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
 
-    const-string v5, "MSCOIN-JQ"
-
-    const-string v6, "start"
-
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getPRODUCT_COIN_AMOUNTS$cp()Ljava/util/Map;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v6
-
-    const-string v5, "MSCOIN-MAP"
-
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
     iget-object v0, p0, Ljq;->q:Lcom/android/billingclient/api/ProductDetails;
 
     invoke-virtual {v0}, Lcom/android/billingclient/api/ProductDetails;->getProductId()Ljava/lang/String;
@@ -158,14 +140,6 @@
 
     iput v5, p0, Ljq;->s:I
 
-    invoke-static {v5}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
-
-    move-result-object v6
-
-    const-string v4, "MSCOIN-AMT"
-
-    invoke-static {v4, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
     iget-object v0, p0, Ljq;->r:Landroid/app/Activity;
 
     invoke-static {v0}, Luh;->a(Landroid/content/Context;)Lmh0;
@@ -189,12 +163,6 @@
     :after_save
 
     invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    const-string v5, "MSCOIN-JQ"
-
-    const-string v6, "saved"
-
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :emit
 
@@ -229,12 +197,6 @@
     return-object v0
 
     :return_suspended
-
-    const-string v5, "MSCOIN-JQ"
-
-    const-string v6, "suspended"
-
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     sget-object v0, Lqf0;->o:Lqf0;
 
