@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID"/>
     <permission android:name="com.smart.otp.app.assistant.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature"/>
     <uses-permission android:name="com.smart.otp.app.assistant.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
-    <application android:allowBackup="false" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:dataExtractionRules="@xml/data_extraction_rules" android:extractNativeLibs="false" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:localeConfig="@xml/locale_config" android:name="com.pairip.application.Application" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.GetCode" android:usesCleartextTraffic="true">
+    <application android:allowBackup="false" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:dataExtractionRules="@xml/data_extraction_rules" android:extractNativeLibs="false" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:localeConfig="@xml/locale_config" android:name="com.galixo.android.virtualnumber.getcode.app.AndroidApp" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.GetCode" android:usesCleartextTraffic="true">
         <activity android:configChanges="locale|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale" android:exported="true" android:label="@string/app_name" android:name="com.galixo.android.virtualnumber.getcode.MainActivity" android:screenOrientation="portrait" android:theme="@style/Theme.GetCode.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -109,7 +109,6 @@
             </intent-filter>
         </receiver>
         <activity android:exported="false" android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" android:stateNotNeeded="true" android:theme="@style/Theme.PlayCore.Transparent"/>
-        <activity android:exported="false" android:name="com.pairip.licensecheck.LicenseActivity"/>
         <meta-data android:name="com.android.vending.splits.required" android:value="true"/>
         <meta-data android:name="com.android.stamp.source" android:value="https://play.google.com/store"/>
         <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_DISTRIBUTION_APK"/>

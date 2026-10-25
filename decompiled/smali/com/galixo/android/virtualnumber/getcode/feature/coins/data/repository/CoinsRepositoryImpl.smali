@@ -81,19 +81,11 @@
 
 # virtual methods
 .method public fetchCoins(Lce0;)Ljava/lang/Object;
-    .locals 6
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(",
-            "Lce0;",
-            ")",
-            "Ljava/lang/Object;"
-        }
-    .end annotation
+    .locals 5
 
     instance-of v0, p1, Ly40;
 
-    if-eqz v0, :cond_0
+    if-eqz v0, :not_state
 
     move-object v0, p1
 
@@ -105,137 +97,75 @@
 
     and-int v3, v1, v2
 
-    if-eqz v3, :cond_0
+    if-eqz v3, :not_state
 
     sub-int/2addr v1, v2
 
     iput v1, v0, Ly40;->r:I
 
-    goto :goto_0
+    iget-object p1, v0, Ly40;->p:Ljava/lang/Object;
 
-    :cond_0
+    goto :state_ready
+
+    :not_state
+
     new-instance v0, Ly40;
 
     invoke-direct {v0, p0, p1}, Ly40;-><init>(Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/repository/CoinsRepositoryImpl;Lce0;)V
 
-    :goto_0
-    iget-object p1, v0, Ly40;->p:Ljava/lang/Object;
+    :state_ready
 
     iget v1, v0, Ly40;->r:I
 
-    const/4 v2, 0x0
-
-    const/4 v3, 0x2
-
-    const/4 v4, 0x1
-
-    sget-object v5, Lqf0;->o:Lqf0;
-
-    if-eqz v1, :cond_3
-
-    if-eq v1, v4, :cond_2
-
-    if-ne v1, v3, :cond_1
-
-    iget-object p0, v0, Ly40;->o:Lof;
+    if-eqz v1, :resume
 
     invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
 
-    goto :goto_3
+    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/repository/CoinsRepositoryImpl;->prefs:Lcom/galixo/android/virtualnumber/getcode/core/utils/datastore/app/AppPreferencesDataStore;
 
-    :cond_1
-    const-string p0, "call to \'resume\' before \'invoke\' with coroutine"
-
-    invoke-static {p0}, Lav0;->o(Ljava/lang/String;)V
-
-    return-object v2
-
-    :cond_2
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    goto :goto_1
-
-    :cond_3
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/repository/CoinsRepositoryImpl;->coinsApiService:Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/remote/CoinsApiService;
-
-    iput v4, v0, Ly40;->r:I
-
-    invoke-virtual {p1, v0}, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/remote/CoinsApiService;->fetchCoins(Lce0;)Ljava/lang/Object;
+    invoke-virtual {p1}, Lcom/galixo/android/virtualnumber/getcode/core/utils/datastore/app/AppPreferencesDataStore;->getPreferences()Lj01;
 
     move-result-object p1
 
-    if-ne p1, v5, :cond_4
+    const/4 v1, 0x1
 
-    goto :goto_2
+    iput v1, v0, Ly40;->r:I
 
-    :cond_4
-    :goto_1
-    check-cast p1, Lpf;
+    invoke-static {p1, v0}, Lbd5;->y(Lj01;Lce0;)Ljava/lang/Object;
 
-    instance-of v1, p1, Lof;
+    move-result-object p1
 
-    if-eqz v1, :cond_6
+    sget-object v1, Lqf0;->o:Lqf0;
 
-    iget-object p0, p0, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/repository/CoinsRepositoryImpl;->prefs:Lcom/galixo/android/virtualnumber/getcode/core/utils/datastore/app/AppPreferencesDataStore;
+    if-ne p1, v1, :suspended
 
-    move-object v1, p1
+    goto :have_value
 
-    check-cast v1, Lof;
+    :resume
 
-    iget-object v2, v1, Lof;->a:Ljava/lang/Object;
+    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
 
-    check-cast v2, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/remote/dto/CoinsResponse;
+    :have_value
 
-    iget v2, v2, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/remote/dto/CoinsResponse;->a:I
+    check-cast p1, Lkg;
 
-    iput-object v1, v0, Ly40;->o:Lof;
-
-    iput v3, v0, Ly40;->r:I
-
-    invoke-virtual {p0, v2, v0}, Lcom/galixo/android/virtualnumber/getcode/core/utils/datastore/app/AppPreferencesDataStore;->setCoinsBalance(ILce0;)Ljava/lang/Object;
-
-    move-result-object p0
-
-    if-ne p0, v5, :cond_5
-
-    :goto_2
-    return-object v5
-
-    :cond_5
-    move-object p0, p1
-
-    :goto_3
-    new-instance p1, Lof;
-
-    check-cast p0, Lof;
-
-    iget-object p0, p0, Lof;->a:Ljava/lang/Object;
-
-    check-cast p0, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/remote/dto/CoinsResponse;
-
-    iget p0, p0, Lcom/galixo/android/virtualnumber/getcode/feature/coins/data/remote/dto/CoinsResponse;->a:I
+    iget p1, p1, Lkg;->f:I
 
     new-instance v0, Ljava/lang/Integer;
 
-    invoke-direct {v0, p0}, Ljava/lang/Integer;-><init>(I)V
+    invoke-direct {v0, p1}, Ljava/lang/Integer;-><init>(I)V
+
+    new-instance p1, Lof;
 
     invoke-direct {p1, v0}, Lof;-><init>(Ljava/lang/Object;)V
 
     return-object p1
 
-    :cond_6
-    instance-of p0, p1, Lnf;
+    :suspended
 
-    if-eqz p0, :cond_7
+    sget-object p1, Lqf0;->o:Lqf0;
 
     return-object p1
-
-    :cond_7
-    invoke-static {}, Lav0;->k()V
-
-    return-object v2
 .end method
 
 .method public purchaseGooglePlay(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lce0;)Ljava/lang/Object;

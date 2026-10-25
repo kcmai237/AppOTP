@@ -490,69 +490,13 @@
 
 # virtual methods
 .method public checkRemoteConfig(Lp51;)V
-    .locals 4
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(",
-            "Lp51;",
-            ")V"
-        }
-    .end annotation
+    .locals 2
 
-    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+    sget-object v0, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
 
-    iget-object v0, p0, Lcom/galixo/android/virtualnumber/getcode/core/firebase/config/data/repository/RemoteConfigRepositoryImpl;->internetManager:Lcom/galixo/android/virtualnumber/getcode/core/utils/manager/InternetManager;
+    const-string v1, ""
 
-    invoke-virtual {v0}, Lcom/galixo/android/virtualnumber/getcode/core/utils/manager/InternetManager;->isInternetConnected()Z
-
-    move-result v0
-
-    if-nez v0, :cond_0
-
-    sget-object p0, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
-
-    const-string v0, "No Internet Found"
-
-    invoke-interface {p1, p0, v0}, Lp51;->invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-
-    return-void
-
-    :cond_0
-    sget-object v0, Lxn0;->a:Lnk0;
-
-    sget-object v0, Lvj0;->q:Lvj0;
-
-    invoke-static {v0}, Lh92;->f(Lhf0;)Lly;
-
-    move-result-object v0
-
-    new-instance v1, Lz53;
-
-    const/4 v2, 0x1
-
-    const/4 v3, 0x0
-
-    invoke-direct {v1, p0, p1, v3, v2}, Lz53;-><init>(Lcom/galixo/android/virtualnumber/getcode/core/firebase/config/data/repository/RemoteConfigRepositoryImpl;Lp51;Lce0;I)V
-
-    const/4 p1, 0x3
-
-    invoke-static {v0, v3, v1, p1}, Lb8;->P(Lpf0;Lhf0;Lp51;I)Lvr3;
-
-    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/core/firebase/config/data/repository/RemoteConfigRepositoryImpl;->remoteConfigDataSource:Ln53;
-
-    new-instance v0, Lpm2;
-
-    const/4 v1, 0x7
-
-    invoke-direct {v0, v1, p0}, Lpm2;-><init>(ILjava/lang/Object;)V
-
-    new-instance p0, Lyg2;
-
-    const/16 v1, 0x17
-
-    invoke-direct {p0, v1}, Lyg2;-><init>(I)V
-
-    invoke-interface {p1, v0, p0}, Ln53;->addConfigUpdateListener(Lz41;Lb51;)V
+    invoke-interface {p1, v0, v1}, Lp51;->invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     return-void
 .end method

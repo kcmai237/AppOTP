@@ -105,37 +105,9 @@
 .end method
 
 .method private final resolveEmbeddedBaseUrl()Ljava/lang/String;
-    .locals 2
+    .locals 1
 
-    :try_start_0
-    iget-object p0, p0, Lcom/galixo/android/virtualnumber/getcode/core/network/NetworkRuntimeConfigImpl;->securePayloadDecryptor:Lnf3;
-
-    sget-object v0, Lcom/galixo/android/virtualnumber/getcode/core/crypto/NativeCryptoBridge;->a:Lcom/galixo/android/virtualnumber/getcode/core/crypto/NativeCryptoBridge;
-
-    const/4 v1, 0x0
-
-    invoke-virtual {v0, v1}, Lcom/galixo/android/virtualnumber/getcode/core/crypto/NativeCryptoBridge;->nativeGetEmbeddedMainBaseUrlCipher(Z)Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-interface {p0, v0}, Lnf3;->decryptUtf8Payload(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object p0
-
-    invoke-static {p0}, Lmu3;->y0(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
-
-    move-result-object p0
-
-    invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object p0
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
-
-    return-object p0
-
-    :catch_0
-    const-string p0, ""
+    const-string p0, "http://10.0.2.2:18942"
 
     return-object p0
 .end method
@@ -243,17 +215,7 @@
 
 # virtual methods
 .method public applyRemotePreferences(Lr53;)V
-    .locals 1
-
-    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    iget-object v0, p0, Lcom/galixo/android/virtualnumber/getcode/core/network/NetworkRuntimeConfigImpl;->securePayloadDecryptor:Lnf3;
-
-    invoke-direct {p0, p1, v0}, Lcom/galixo/android/virtualnumber/getcode/core/network/NetworkRuntimeConfigImpl;->resolveMainBaseUrl(Lr53;Lnf3;)Ljava/lang/String;
-
-    move-result-object p1
-
-    iput-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/core/network/NetworkRuntimeConfigImpl;->mainUrl:Ljava/lang/String;
+    .locals 0
 
     return-void
 .end method

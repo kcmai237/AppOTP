@@ -1437,537 +1437,75 @@
 .end method
 
 .method private final queryProductsInternal(Lce0;)Ljava/lang/Object;
-    .locals 12
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(",
-            "Lce0;",
-            ")",
-            "Ljava/lang/Object;"
-        }
-    .end annotation
+    .locals 3
 
-    instance-of v0, p1, Llq;
+    new-instance v0, Ljava/util/ArrayList;
 
-    if-eqz v0, :cond_0
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    move-object v0, p1
+    new-instance v1, Lcom/android/billingclient/api/ProductDetails;
 
-    check-cast v0, Llq;
+    const-string v2, "{\"productId\":\"add_70_coins\",\"type\":\"inapp\",\"title\":\"70 Coins\",\"name\":\"70 Coins\",\"description\":\"70 coins\",\"oneTimePurchaseOfferDetails\":{\"priceAmountMicros\":990000,\"priceCurrencyCode\":\"USD\",\"formattedPrice\":\"$0.99\"}}"
 
-    iget v1, v0, Llq;->r:I
+    invoke-direct {v1, v2}, Lcom/android/billingclient/api/ProductDetails;-><init>(Ljava/lang/String;)V
 
-    const/high16 v2, -0x80000000
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    and-int v3, v1, v2
+    new-instance v1, Lcom/android/billingclient/api/ProductDetails;
 
-    if-eqz v3, :cond_0
+    const-string v2, "{\"productId\":\"150_coins\",\"type\":\"inapp\",\"title\":\"150 Coins\",\"name\":\"150 Coins\",\"description\":\"150 coins\",\"oneTimePurchaseOfferDetails\":{\"priceAmountMicros\":1990000,\"priceCurrencyCode\":\"USD\",\"formattedPrice\":\"$1.99\"}}"
 
-    sub-int/2addr v1, v2
+    invoke-direct {v1, v2}, Lcom/android/billingclient/api/ProductDetails;-><init>(Ljava/lang/String;)V
 
-    iput v1, v0, Llq;->r:I
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    goto :goto_0
+    new-instance v1, Lcom/android/billingclient/api/ProductDetails;
 
-    :cond_0
-    new-instance v0, Llq;
+    const-string v2, "{\"productId\":\"add_250_coins\",\"type\":\"inapp\",\"title\":\"250 Coins\",\"name\":\"250 Coins\",\"description\":\"250 coins\",\"oneTimePurchaseOfferDetails\":{\"priceAmountMicros\":2990000,\"priceCurrencyCode\":\"USD\",\"formattedPrice\":\"$2.99\"}}"
 
-    invoke-direct {v0, p0, p1}, Llq;-><init>(Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;Lce0;)V
+    invoke-direct {v1, v2}, Lcom/android/billingclient/api/ProductDetails;-><init>(Ljava/lang/String;)V
 
-    :goto_0
-    iget-object p1, v0, Llq;->p:Ljava/lang/Object;
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    iget v1, v0, Llq;->r:I
+    new-instance v1, Lcom/android/billingclient/api/ProductDetails;
 
-    const/4 v2, 0x4
+    const-string v2, "{\"productId\":\"add_400_coins\",\"type\":\"inapp\",\"title\":\"400 Coins\",\"name\":\"400 Coins\",\"description\":\"400 coins\",\"oneTimePurchaseOfferDetails\":{\"priceAmountMicros\":4990000,\"priceCurrencyCode\":\"USD\",\"formattedPrice\":\"$4.99\"}}"
 
-    const/4 v3, 0x3
+    invoke-direct {v1, v2}, Lcom/android/billingclient/api/ProductDetails;-><init>(Ljava/lang/String;)V
 
-    const/4 v4, 0x1
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    sget-object v5, Lc94;->a:Lc94;
+    new-instance v1, Lcom/android/billingclient/api/ProductDetails;
 
-    const/4 v6, 0x2
+    const-string v2, "{\"productId\":\"add_800_coins\",\"type\":\"inapp\",\"title\":\"800 Coins\",\"name\":\"800 Coins\",\"description\":\"800 coins\",\"oneTimePurchaseOfferDetails\":{\"priceAmountMicros\":8990000,\"priceCurrencyCode\":\"USD\",\"formattedPrice\":\"$8.99\"}}"
 
-    const/4 v7, 0x0
+    invoke-direct {v1, v2}, Lcom/android/billingclient/api/ProductDetails;-><init>(Ljava/lang/String;)V
 
-    sget-object v8, Lqf0;->o:Lqf0;
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    if-eqz v1, :cond_5
+    new-instance v1, Lcom/android/billingclient/api/ProductDetails;
 
-    if-eq v1, v4, :cond_4
+    const-string v2, "{\"productId\":\"add_1600_coins\",\"type\":\"inapp\",\"title\":\"1600 Coins\",\"name\":\"1600 Coins\",\"description\":\"1600 coins\",\"oneTimePurchaseOfferDetails\":{\"priceAmountMicros\":16990000,\"priceCurrencyCode\":\"USD\",\"formattedPrice\":\"$16.99\"}}"
 
-    if-eq v1, v6, :cond_3
+    invoke-direct {v1, v2}, Lcom/android/billingclient/api/ProductDetails;-><init>(Ljava/lang/String;)V
 
-    if-eq v1, v3, :cond_2
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    if-ne v1, v2, :cond_1
+    new-instance v1, Loq;
 
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
+    invoke-direct {v1, v0}, Loq;-><init>(Ljava/util/List;)V
 
-    return-object v5
+    iget-object v0, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->_productDetailsState:Lof2;
 
-    :cond_1
-    const-string p0, "call to \'resume\' before \'invoke\' with coroutine"
+    check-cast v0, Lct3;
 
-    invoke-static {p0}, Lav0;->o(Ljava/lang/String;)V
+    const/4 v2, 0x0
 
-    return-object v7
+    invoke-virtual {v0, v2, v1}, Lct3;->k(Ljava/lang/Object;Ljava/lang/Object;)Z
 
-    :cond_2
-    iget v1, v0, Llq;->o:I
+    sget-object v0, Lc94;->a:Lc94;
 
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    goto/16 :goto_6
-
-    :cond_3
-    iget v1, v0, Llq;->o:I
-
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    goto :goto_2
-
-    :cond_4
-    iget v1, v0, Llq;->o:I
-
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    goto :goto_1
-
-    :cond_5
-    invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
-
-    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->_productDetailsState:Lof2;
-
-    check-cast p1, Lct3;
-
-    invoke-virtual {p1}, Lct3;->getValue()Ljava/lang/Object;
-
-    move-result-object p1
-
-    instance-of p1, p1, Loq;
-
-    if-eqz p1, :cond_6
-
-    goto/16 :goto_9
-
-    :cond_6
-    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->cacheGeneration:Ljava/util/concurrent/atomic/AtomicInteger;
-
-    invoke-virtual {p1}, Ljava/util/concurrent/atomic/AtomicInteger;->get()I
-
-    move-result v1
-
-    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->_productDetailsState:Lof2;
-
-    check-cast p1, Lct3;
-
-    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    sget-object v9, Lpq;->a:Lpq;
-
-    invoke-virtual {p1, v7, v9}, Lct3;->k(Ljava/lang/Object;Ljava/lang/Object;)Z
-
-    iput v1, v0, Llq;->o:I
-
-    iput v4, v0, Llq;->r:I
-
-    invoke-direct {p0, v0}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->ensureConnected(Lce0;)Ljava/lang/Object;
-
-    move-result-object p1
-
-    if-ne p1, v8, :cond_7
-
-    goto/16 :goto_8
-
-    :cond_7
-    :goto_1
-    check-cast p1, Ljava/lang/Boolean;
-
-    invoke-virtual {p1}, Ljava/lang/Boolean;->booleanValue()Z
-
-    move-result p1
-
-    if-nez p1, :cond_8
-
-    iget-object p0, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->_productDetailsState:Lof2;
-
-    new-instance p1, Lmq;
-
-    const-string v0, "Billing service unavailable"
-
-    invoke-direct {p1, v0, v6}, Lmq;-><init>(Ljava/lang/String;I)V
-
-    check-cast p0, Lct3;
-
-    invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    invoke-virtual {p0, v7, p1}, Lct3;->k(Ljava/lang/Object;Ljava/lang/Object;)Z
-
-    return-object v5
-
-    :cond_8
-    iget-object p1, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->appPreferencesDataStore:Lcom/galixo/android/virtualnumber/getcode/core/utils/datastore/app/AppPreferencesDataStore;
-
-    invoke-virtual {p1}, Lcom/galixo/android/virtualnumber/getcode/core/utils/datastore/app/AppPreferencesDataStore;->getPreferences()Lj01;
-
-    move-result-object p1
-
-    iput v1, v0, Llq;->o:I
-
-    iput v6, v0, Llq;->r:I
-
-    invoke-static {p1, v0}, Lbd5;->y(Lj01;Lce0;)Ljava/lang/Object;
-
-    move-result-object p1
-
-    if-ne p1, v8, :cond_9
-
-    goto/16 :goto_8
-
-    :cond_9
-    :goto_2
-    check-cast p1, Lkg;
-
-    iget-object p1, p1, Lkg;->m:Ltz;
-
-    invoke-static {}, Lcom/android/billingclient/api/QueryProductDetailsParams;->newBuilder()Lcom/android/billingclient/api/QueryProductDetailsParams$Builder;
-
-    move-result-object v9
-
-    sget-object v10, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->Companion:Lcq;
-
-    invoke-virtual {v10}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    invoke-virtual {p1}, Ljava/lang/Enum;->ordinal()I
-
-    move-result p1
-
-    const/16 v10, 0xa
-
-    if-eqz p1, :cond_c
-
-    if-eq p1, v4, :cond_b
-
-    if-ne p1, v6, :cond_a
-
-    invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getPRODUCT_IDS$cp()Ljava/util/List;
-
-    move-result-object p1
-
-    new-instance v4, Ljava/util/ArrayList;
-
-    invoke-static {p1, v10}, Ld50;->s(Ljava/lang/Iterable;I)I
-
-    move-result v6
-
-    invoke-direct {v4, v6}, Ljava/util/ArrayList;-><init>(I)V
-
-    invoke-interface {p1}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
-
-    move-result-object p1
-
-    :goto_3
-    invoke-interface {p1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v6
-
-    if-eqz v6, :cond_d
-
-    invoke-interface {p1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Ljava/lang/String;
-
-    invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getTIKTOK_PRODUCT_ID_MAP$cp()Ljava/util/Map;
-
-    move-result-object v11
-
-    invoke-static {v6, v11}, Ly82;->e0(Ljava/lang/Object;Ljava/util/Map;)Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Ljava/lang/String;
-
-    invoke-virtual {v4, v6}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    goto :goto_3
-
-    :cond_a
-    invoke-static {}, Lav0;->k()V
-
-    return-object v7
-
-    :cond_b
-    invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getPRODUCT_IDS$cp()Ljava/util/List;
-
-    move-result-object p1
-
-    new-instance v4, Ljava/util/ArrayList;
-
-    invoke-static {p1, v10}, Ld50;->s(Ljava/lang/Iterable;I)I
-
-    move-result v6
-
-    invoke-direct {v4, v6}, Ljava/util/ArrayList;-><init>(I)V
-
-    invoke-interface {p1}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
-
-    move-result-object p1
-
-    :goto_4
-    invoke-interface {p1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v6
-
-    if-eqz v6, :cond_d
-
-    invoke-interface {p1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Ljava/lang/String;
-
-    invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getFACEBOOK_PRODUCT_ID_MAP$cp()Ljava/util/Map;
-
-    move-result-object v11
-
-    invoke-static {v6, v11}, Ly82;->e0(Ljava/lang/Object;Ljava/util/Map;)Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Ljava/lang/String;
-
-    invoke-virtual {v4, v6}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    goto :goto_4
-
-    :cond_c
-    invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getPRODUCT_IDS$cp()Ljava/util/List;
-
-    move-result-object v4
-
-    :cond_d
-    new-instance p1, Ljava/util/ArrayList;
-
-    invoke-static {v4, v10}, Ld50;->s(Ljava/lang/Iterable;I)I
-
-    move-result v6
-
-    invoke-direct {p1, v6}, Ljava/util/ArrayList;-><init>(I)V
-
-    invoke-interface {v4}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
-
-    move-result-object v4
-
-    :goto_5
-    invoke-interface {v4}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v6
-
-    if-eqz v6, :cond_e
-
-    invoke-interface {v4}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, Ljava/lang/String;
-
-    invoke-static {}, Lcom/android/billingclient/api/QueryProductDetailsParams$Product;->newBuilder()Lcom/android/billingclient/api/QueryProductDetailsParams$Product$Builder;
-
-    move-result-object v10
-
-    invoke-virtual {v10, v6}, Lcom/android/billingclient/api/QueryProductDetailsParams$Product$Builder;->setProductId(Ljava/lang/String;)Lcom/android/billingclient/api/QueryProductDetailsParams$Product$Builder;
-
-    move-result-object v6
-
-    const-string v10, "inapp"
-
-    invoke-virtual {v6, v10}, Lcom/android/billingclient/api/QueryProductDetailsParams$Product$Builder;->setProductType(Ljava/lang/String;)Lcom/android/billingclient/api/QueryProductDetailsParams$Product$Builder;
-
-    move-result-object v6
-
-    invoke-virtual {v6}, Lcom/android/billingclient/api/QueryProductDetailsParams$Product$Builder;->build()Lcom/android/billingclient/api/QueryProductDetailsParams$Product;
-
-    move-result-object v6
-
-    invoke-virtual {p1, v6}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    goto :goto_5
-
-    :cond_e
-    invoke-virtual {v9, p1}, Lcom/android/billingclient/api/QueryProductDetailsParams$Builder;->setProductList(Ljava/util/List;)Lcom/android/billingclient/api/QueryProductDetailsParams$Builder;
-
-    move-result-object p1
-
-    invoke-virtual {p1}, Lcom/android/billingclient/api/QueryProductDetailsParams$Builder;->build()Lcom/android/billingclient/api/QueryProductDetailsParams;
-
-    move-result-object p1
-
-    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    sget-object v4, Lxn0;->a:Lnk0;
-
-    sget-object v4, Lvj0;->q:Lvj0;
-
-    new-instance v6, Lk;
-
-    const/16 v9, 0x8
-
-    invoke-direct {v6, p0, p1, v7, v9}, Lk;-><init>(Ljava/lang/Object;Ljava/lang/Object;Lce0;I)V
-
-    iput v1, v0, Llq;->o:I
-
-    iput v3, v0, Llq;->r:I
-
-    invoke-static {v4, v6, v0}, Lb8;->c0(Lhf0;Lp51;Lce0;)Ljava/lang/Object;
-
-    move-result-object p1
-
-    if-ne p1, v8, :cond_f
-
-    goto :goto_8
-
-    :cond_f
-    :goto_6
-    check-cast p1, Lcom/android/billingclient/api/ProductDetailsResult;
-
-    invoke-virtual {p1}, Lcom/android/billingclient/api/ProductDetailsResult;->getBillingResult()Lcom/android/billingclient/api/BillingResult;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Lcom/android/billingclient/api/BillingResult;->getResponseCode()I
-
-    move-result v3
-
-    if-nez v3, :cond_15
-
-    invoke-virtual {p1}, Lcom/android/billingclient/api/ProductDetailsResult;->getProductDetailsList()Ljava/util/List;
-
-    move-result-object p1
-
-    if-nez p1, :cond_10
-
-    sget-object p1, Lkt0;->o:Lkt0;
-
-    :cond_10
-    invoke-interface {p1}, Ljava/util/List;->size()I
-
-    invoke-interface {p1}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
-
-    move-result-object v3
-
-    :goto_7
-    invoke-interface {v3}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v4
-
-    if-eqz v4, :cond_12
-
-    invoke-interface {v3}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v4
-
-    check-cast v4, Lcom/android/billingclient/api/ProductDetails;
-
-    invoke-virtual {v4}, Lcom/android/billingclient/api/ProductDetails;->getOneTimePurchaseOfferDetails()Lcom/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails;
-
-    move-result-object v6
-
-    if-eqz v6, :cond_11
-
-    invoke-virtual {v6}, Lcom/android/billingclient/api/ProductDetails$OneTimePurchaseOfferDetails;->getFormattedPrice()Ljava/lang/String;
-
-    move-result-object v6
-
-    :cond_11
-    invoke-virtual {v4}, Lcom/android/billingclient/api/ProductDetails;->getProductId()Ljava/lang/String;
-
-    invoke-virtual {v4}, Lcom/android/billingclient/api/ProductDetails;->getTitle()Ljava/lang/String;
-
-    goto :goto_7
-
-    :cond_12
-    iget-object v3, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->cacheGeneration:Ljava/util/concurrent/atomic/AtomicInteger;
-
-    invoke-virtual {v3}, Ljava/util/concurrent/atomic/AtomicInteger;->get()I
-
-    move-result v3
-
-    if-eq v3, v1, :cond_14
-
-    iput v1, v0, Llq;->o:I
-
-    iput v2, v0, Llq;->r:I
-
-    invoke-direct {p0, v0}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->queryProductsInternal(Lce0;)Ljava/lang/Object;
-
-    move-result-object p0
-
-    if-ne p0, v8, :cond_13
-
-    :goto_8
-    return-object v8
-
-    :cond_13
-    :goto_9
-    return-object v5
-
-    :cond_14
-    iget-object p0, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->_productDetailsState:Lof2;
-
-    new-instance v0, Loq;
-
-    invoke-direct {v0, p1}, Loq;-><init>(Ljava/util/List;)V
-
-    check-cast p0, Lct3;
-
-    invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    invoke-virtual {p0, v7, v0}, Lct3;->k(Ljava/lang/Object;Ljava/lang/Object;)Z
-
-    return-object v5
-
-    :cond_15
-    invoke-virtual {p1}, Lcom/android/billingclient/api/ProductDetailsResult;->getBillingResult()Lcom/android/billingclient/api/BillingResult;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Lcom/android/billingclient/api/BillingResult;->getDebugMessage()Ljava/lang/String;
-
-    iget-object p0, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->_productDetailsState:Lof2;
-
-    new-instance v0, Lmq;
-
-    invoke-virtual {p1}, Lcom/android/billingclient/api/ProductDetailsResult;->getBillingResult()Lcom/android/billingclient/api/BillingResult;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Lcom/android/billingclient/api/BillingResult;->getDebugMessage()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    invoke-virtual {p1}, Lcom/android/billingclient/api/ProductDetailsResult;->getBillingResult()Lcom/android/billingclient/api/BillingResult;
-
-    move-result-object p1
-
-    invoke-virtual {p1}, Lcom/android/billingclient/api/BillingResult;->getResponseCode()I
-
-    move-result p1
-
-    invoke-direct {v0, v1, p1}, Lmq;-><init>(Ljava/lang/String;I)V
-
-    check-cast p0, Lct3;
-
-    invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    invoke-virtual {p0, v7, v0}, Lct3;->k(Ljava/lang/Object;Ljava/lang/Object;)Z
-
-    return-object v5
+    return-object v0
 .end method
 
 

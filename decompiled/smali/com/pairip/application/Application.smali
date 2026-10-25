@@ -16,9 +16,7 @@
 .method protected attachBaseContext(Landroid/content/Context;)V
     .locals 0
 
-    invoke-static {p1}, Lcom/pairip/licensecheck/LicenseClient;->checkLicense(Landroid/content/Context;)V
-
-    invoke-super {p0, p1}, Lcom/pairip/application/Application;->attachBaseContext(Landroid/content/Context;)V
+    invoke-super {p0, p1}, Lcom/galixo/android/virtualnumber/getcode/app/AndroidApp;->attachBaseContext(Landroid/content/Context;)V
 
     return-void
 .end method
