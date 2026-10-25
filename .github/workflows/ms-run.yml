@@ -74,6 +74,9 @@ jobs:
             adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_act.xml ui_act.xml || true
             cp mock.log mock_after_service.log
+            adb root || true
+            sleep 3
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_after_activation.bin || true
             python3 ci/purchase_nav.py coins "Buy Coins >" || true
             adb exec-out screencap -p > screenshot_coins.png
             adb shell uiautomator dump /sdcard/ui_coins.xml >/dev/null 2>&1 || true
@@ -85,6 +88,7 @@ jobs:
             adb shell uiautomator dump /sdcard/ui_purchase.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_purchase.xml ui_purchase.xml || true
             cp mock.log mock_after_purchase.log
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_after_purchase.bin || true
             adb logcat -d > logcat_purchase.txt || true
             adb shell dumpsys activity activities > activity_purchase.txt || true
             adb shell pidof com.smart.otp.app.assistant > pid_purchase.txt || true
@@ -138,5 +142,7 @@ jobs:
             ui_refresh.xml
             ds_ls.txt
             ds_prefs.bin
+            ds_after_activation.bin
+            ds_after_purchase.bin
             ui_act.xml
             ui_*.xml

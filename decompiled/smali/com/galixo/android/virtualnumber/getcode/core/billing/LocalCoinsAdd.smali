@@ -28,7 +28,7 @@
 
     check-cast p1, Ldf2;
 
-    iget-object v0, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/LocalCoinsAdd;->amount:I
+    iget v0, p0, Lcom/galixo/android/virtualnumber/getcode/core/billing/LocalCoinsAdd;->amount:I
 
     sget-object v1, Ljg;->f:Ljy2;
 
