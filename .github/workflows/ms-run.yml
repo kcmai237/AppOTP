@@ -63,6 +63,11 @@ jobs:
             adb shell pidof com.smart.otp.app.assistant > pid.txt || true
             adb shell dumpsys activity activities | grep -iE "mResumedActivity|smart.otp|galixo" > activity.txt || true
             adb logcat -d > logcat.txt
+            cat activity.txt
+            cat pid.txt
+            test -s pid.txt
+            grep -q "mResumedActivity.*com.smart.otp.app.assistant" activity.txt
+            ! grep -q "FATAL EXCEPTION.*com.smart.otp.app.assistant" logcat.txt
 
       - uses: actions/upload-artifact@v4
         if: always()

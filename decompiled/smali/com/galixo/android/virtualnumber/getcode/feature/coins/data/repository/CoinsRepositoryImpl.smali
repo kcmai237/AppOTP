@@ -117,7 +117,7 @@
 
     iget v1, v0, Ly40;->r:I
 
-    if-eqz v1, :resume
+    if-nez v1, :resume
 
     invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
 
