@@ -120,7 +120,7 @@ class Handler(BaseHTTPRequestHandler):
             with LOCK:
                 POLLS[activation_id] = POLLS.get(activation_id, 0) + 1
                 count = POLLS[activation_id]
-            if count >= 2:
+            if count >= 1:
                 return self.reply(200, {"sms_code": "123456", "status": "received"})
             return self.reply(200, {"status": "waiting"})
         if path.startswith("/services/cancel/"):
