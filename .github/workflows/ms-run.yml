@@ -85,6 +85,14 @@ jobs:
             adb shell uiautomator dump /sdcard/ui_purchase.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_purchase.xml ui_purchase.xml || true
             cp mock.log mock_after_purchase.log
+            adb logcat -d > logcat_purchase.txt || true
+            adb shell dumpsys activity activities > activity_purchase.txt || true
+            adb shell pidof com.smart.otp.app.assistant > pid_purchase.txt || true
+            adb shell am start -W -n com.smart.otp.app.assistant/com.galixo.android.virtualnumber.getcode.MainActivity || true
+            sleep 8
+            adb exec-out screencap -p > screenshot_relaunch.png
+            adb shell uiautomator dump /sdcard/ui_relaunch.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_relaunch.xml ui_relaunch.xml || true
             cat activity.txt
             cat pid.txt
             test -s pid.txt
@@ -112,5 +120,10 @@ jobs:
             screenshot_purchase.png
             ui_purchase.xml
             mock_after_purchase.log
+            logcat_purchase.txt
+            activity_purchase.txt
+            pid_purchase.txt
+            screenshot_relaunch.png
+            ui_relaunch.xml
             ui_act.xml
             ui_*.xml
