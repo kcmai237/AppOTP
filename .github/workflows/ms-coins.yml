@@ -59,7 +59,7 @@ jobs:
             python3 ci/ui_nav.py || true
             adb shell uiautomator dump /sdcard/ui_home.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_home.xml ui_home.xml || true
-            python3 ci/purchase_nav.py coins "Buy Coins >" || true
+            python3 ci/purchase_nav.py home Back "Buy Coins >" || true
             adb shell uiautomator dump /sdcard/ui_coins.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_coins.xml ui_coins.xml || true
             adb root || true
