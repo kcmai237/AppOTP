@@ -69,7 +69,7 @@ jobs:
             adb pull /sdcard/ui_after.xml ui_after.xml || true
             cp mock.log mock_after_nav.log
             python3 ci/purchase_nav.py buy WhatsApp "United States" "Activate Number" || true
-            sleep 25
+            sleep 65
             adb exec-out screencap -p > screenshot_after_service.png
             adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_act.xml ui_act.xml || true
