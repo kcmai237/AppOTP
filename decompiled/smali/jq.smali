@@ -118,9 +118,7 @@
 
     iput-object v4, p0, Ljq;->t:Ljava/lang/String;
 
-    invoke-static {v4}, Lcq;->a(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v0
+    move-object v0, v4
 
     invoke-static {}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$getPRODUCT_COIN_AMOUNTS$cp()Ljava/util/Map;
 
