@@ -142,7 +142,7 @@
 
     check-cast v0, Ljava/lang/Integer;
 
-    if-eqz v0, :have_amount
+    if-nez v0, :have_amount
 
     const/4 v5, 0x0
 
