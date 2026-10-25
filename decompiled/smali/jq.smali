@@ -110,16 +110,6 @@
 
     invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    sget-object v0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->PRODUCT_COIN_AMOUNTS:Ljava/util/Map;
-
-    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v6
-
-    const-string v5, "MSCOIN-MAP"
-
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
     iget-object v0, p0, Ljq;->q:Lcom/android/billingclient/api/ProductDetails;
 
     invoke-virtual {v0}, Lcom/android/billingclient/api/ProductDetails;->getProductId()Ljava/lang/String;
@@ -160,9 +150,9 @@
 
     move-result-object v6
 
-    const-string v5, "MSCOIN-AMT"
+    const-string v4, "MSCOIN-AMT"
 
-    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     iget-object v0, p0, Ljq;->r:Landroid/app/Activity;
 
