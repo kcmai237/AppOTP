@@ -98,6 +98,10 @@ jobs:
             adb exec-out screencap -p > screenshot_refresh.png
             adb shell uiautomator dump /sdcard/ui_refresh.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_refresh.xml ui_refresh.xml || true
+            adb root || true
+            sleep 3
+            adb shell 'ls -l /data/data/com.smart.otp.app.assistant/files/datastore' > ds_ls.txt || true
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_prefs.bin || true
             cat activity.txt
             cat pid.txt
             test -s pid.txt
@@ -132,5 +136,7 @@ jobs:
             ui_relaunch.xml
             screenshot_refresh.png
             ui_refresh.xml
+            ds_ls.txt
+            ds_prefs.bin
             ui_act.xml
             ui_*.xml

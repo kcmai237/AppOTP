@@ -142,9 +142,7 @@
 
     iput v5, p0, Ljq;->s:I
 
-    iget-object v0, p0, Ljq;->p:Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;
-
-    iget-object v0, v0, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->context:Landroid/content/Context;
+    iget-object v0, p0, Ljq;->r:Landroid/app/Activity;
 
     invoke-static {v0}, Luh;->a(Landroid/content/Context;)Lmh0;
 
