@@ -104,11 +104,11 @@
 
     invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
 
-    const-string v0, "MSCOIN-JQ"
+    const-string v6, "MSCOIN-JQ"
 
-    const-string v1, "start"
+    const-string v7, "start"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     iget-object v0, p0, Ljq;->q:Lcom/android/billingclient/api/ProductDetails;
 
@@ -172,11 +172,11 @@
 
     invoke-static {p1}, Lnp2;->l(Ljava/lang/Object;)V
 
-    const-string v0, "MSCOIN-JQ"
+    const-string v6, "MSCOIN-JQ"
 
-    const-string v1, "saved"
+    const-string v7, "saved"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     :emit
 
@@ -212,11 +212,11 @@
 
     :return_suspended
 
-    const-string v0, "MSCOIN-JQ"
+    const-string v6, "MSCOIN-JQ"
 
-    const-string v1, "suspended"
+    const-string v7, "suspended"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     sget-object v0, Lqf0;->o:Lqf0;
 
