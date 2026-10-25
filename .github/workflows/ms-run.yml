@@ -68,7 +68,7 @@ jobs:
             adb shell uiautomator dump /sdcard/ui_after.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_after.xml ui_after.xml || true
             cp mock.log mock_after_nav.log
-            python3 ci/purchase_nav.py svc WhatsApp || true
+            python3 ci/purchase_nav.py buy WhatsApp "United States" || true
             adb exec-out screencap -p > screenshot_after_service.png
             cp mock.log mock_after_service.log
             cat activity.txt

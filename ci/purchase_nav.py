@@ -60,20 +60,22 @@ def tap(b):
     return x, y
 
 
-def main(step, target):
-    raw = dump(step)
-    print("step %s before: %s" % (step, visible(raw)[:20]), flush=True)
-    b = find(raw, target)
-    if not b:
-        print("target %r not found" % target, flush=True)
-        return 1
-    print("tap %r %s" % (target, b), flush=True)
-    tap(b)
-    time.sleep(4)
+def main(step, targets):
+    for i, target in enumerate(targets):
+        tag = "%s_%d" % (step, i)
+        raw = dump(tag)
+        print("step %s before: %s" % (tag, visible(raw)[:20]), flush=True)
+        b = find(raw, target)
+        if not b:
+            print("target %r not found" % target, flush=True)
+            return 1
+        print("tap %r %s" % (target, b), flush=True)
+        tap(b)
+        time.sleep(4)
     after = dump(step + "_after")
     print("step %s after: %s" % (step, visible(after)[:30]), flush=True)
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1], sys.argv[2]))
+    sys.exit(main(sys.argv[1], sys.argv[2:]))
