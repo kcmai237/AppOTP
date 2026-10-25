@@ -74,6 +74,11 @@ jobs:
             adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_act.xml ui_act.xml || true
             cp mock.log mock_after_service.log
+            python3 ci/purchase_nav.py coins "Buy Coins >" || true
+            adb exec-out screencap -p > screenshot_coins.png
+            adb shell uiautomator dump /sdcard/ui_coins.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_coins.xml ui_coins.xml || true
+            cp mock.log mock_after_coins.log
             cat activity.txt
             cat pid.txt
             test -s pid.txt
@@ -94,6 +99,9 @@ jobs:
             ui_after.xml
             mock_after_nav.log
             mock_after_service.log
+            mock_after_coins.log
             screenshot_after_service.png
+            screenshot_coins.png
+            ui_coins.xml
             ui_act.xml
             ui_*.xml
