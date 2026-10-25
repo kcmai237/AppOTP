@@ -65,7 +65,7 @@ jobs:
             adb root || true
             sleep 3
             adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_before.bin || true
-            python3 ci/purchase_nav.py buy "70 Coins" || true
+            adb shell input tap 942 1227 || true
             sleep 12
             adb exec-out screencap -p > screenshot_after_buy.png
             adb shell uiautomator dump /sdcard/ui_after_buy.xml >/dev/null 2>&1 || true
