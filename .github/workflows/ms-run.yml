@@ -63,13 +63,11 @@ jobs:
             adb shell pidof com.smart.otp.app.assistant > pid.txt || true
             adb shell dumpsys activity activities | grep -iE "mResumedActivity|smart.otp|galixo" > activity.txt || true
             adb logcat -d > logcat.txt
-            adb shell uiautomator dump /sdcard/ui0.xml >/dev/null 2>&1 || true
-            adb pull /sdcard/ui0.xml ui0.xml || true
-            adb shell input tap 540 1753 || true
-            sleep 5
-            adb shell uiautomator dump /sdcard/ui1.xml >/dev/null 2>&1 || true
-            adb pull /sdcard/ui1.xml ui1.xml || true
-            adb exec-out screencap -p > screenshot_after_get_started.png
+            python3 ci/ui_nav.py || true
+            adb exec-out screencap -p > screenshot_after_nav.png
+            adb shell uiautomator dump /sdcard/ui_after.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_after.xml ui_after.xml || true
+            cp mock.log mock_after_nav.log
             cat activity.txt
             cat pid.txt
             test -s pid.txt
@@ -86,6 +84,7 @@ jobs:
             activity.txt
             pid.txt
             mock.log
-            ui0.xml
-            ui1.xml
-            screenshot_after_get_started.png
+            screenshot_after_nav.png
+            ui_after.xml
+            mock_after_nav.log
+            ui_*.xml
