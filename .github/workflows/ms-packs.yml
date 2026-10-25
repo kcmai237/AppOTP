@@ -1,0 +1,78 @@
+name: ms-packs
+
+on:
+  push:
+    branches:
+      - ms-update
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  packs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Start mock backend
+        run: |
+          nohup python3 mock/server.py > mock.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18942/health; then exit 0; fi
+            sleep 0.5
+          done
+          cat mock.log
+          exit 1
+
+      - name: Boot, install, buy every pack
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          disable-animations: true
+          disk-size: 2048M
+          ram-size: 2048M
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            set -e
+            adb wait-for-device
+            until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+            adb shell input keyevent 82 || true
+            adb shell wm dismiss-keyguard || true
+            adb shell settings put global window_animation_scale 0 || true
+            adb shell settings put global transition_animation_scale 0 || true
+            adb shell settings put global animator_duration_scale 0 || true
+            adb install -r out/app_patched_signed.apk
+            adb logcat -c
+            adb shell am start -W -n com.smart.otp.app.assistant/com.galixo.android.virtualnumber.getcode.MainActivity
+            sleep 8
+            adb root || true
+            sleep 3
+            python3 ci/packs_flow.py
+            adb shell pidof com.smart.otp.app.assistant > pid.txt || true
+            adb logcat -d > logcat.txt || true
+            grep -q "FATAL EXCEPTION.*com.smart.otp.app.assistant" logcat.txt && exit 1 || true
+            test -s pid.txt
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ms-packs-artifacts
+          path: |
+            ui_*.xml
+            pack_*.bin
+            mock.log
+            logcat.txt
+            pid.txt
