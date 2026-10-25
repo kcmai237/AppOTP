@@ -20,15 +20,22 @@ PACKS = [
 ]
 
 
+SCROLLS = [
+    ("540", "1950", "950", "800"),
+    ("1050", "1950", "950", "800"),
+    ("540", "1900", "1100", "1200"),
+]
+
+
 def tap_text(target):
     raw = dump("nav")
     bounds = find(raw, target)
-    for _ in range(2):
+    for attempt, (x, y1, y2, ms) in enumerate(SCROLLS):
         if bounds:
             break
-        sh("input", "swipe", "540", "1800", "540", "1200", "300")
+        sh("input", "swipe", x, y1, x, y2, ms)
         time.sleep(2)
-        raw = dump("nav_scroll")
+        raw = dump("nav_scroll_%d" % attempt)
         bounds = find(raw, target)
     if not bounds:
         print("[FAIL] target %r not found; visible=%s" % (target, visible(raw)[:25]), flush=True)
