@@ -93,6 +93,11 @@ jobs:
             adb exec-out screencap -p > screenshot_relaunch.png
             adb shell uiautomator dump /sdcard/ui_relaunch.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_relaunch.xml ui_relaunch.xml || true
+            python3 ci/purchase_nav.py refresh "Refresh coins" || true
+            sleep 5
+            adb exec-out screencap -p > screenshot_refresh.png
+            adb shell uiautomator dump /sdcard/ui_refresh.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_refresh.xml ui_refresh.xml || true
             cat activity.txt
             cat pid.txt
             test -s pid.txt
@@ -125,5 +130,7 @@ jobs:
             pid_purchase.txt
             screenshot_relaunch.png
             ui_relaunch.xml
+            screenshot_refresh.png
+            ui_refresh.xml
             ui_act.xml
             ui_*.xml

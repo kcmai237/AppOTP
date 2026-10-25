@@ -170,7 +170,9 @@
 
     :emit
 
-    invoke-static {p0}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$get_purchaseOutcome$p(Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;)Lx00;
+    iget-object v4, p0, Ljq;->p:Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;
+
+    invoke-static {v4}, Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;->access$get_purchaseOutcome$p(Lcom/galixo/android/virtualnumber/getcode/core/billing/BillingManager;)Lx00;
 
     move-result-object v0
 
