@@ -48,6 +48,7 @@ jobs:
           ram-size: 2048M
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
+            set -e
             adb wait-for-device
             until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
             adb shell input keyevent 82 || true
@@ -61,88 +62,63 @@ jobs:
             sleep 30
             adb exec-out screencap -p > screenshot.png
             adb shell pidof com.smart.otp.app.assistant > pid.txt || true
-            adb shell dumpsys activity activities | grep -iE "mResumedActivity|smart.otp|galixo" > activity.txt || true
-            adb logcat -d > logcat.txt
-            python3 ci/ui_nav.py || true
-            adb exec-out screencap -p > screenshot_after_nav.png
-            adb shell uiautomator dump /sdcard/ui_after.xml >/dev/null 2>&1 || true
-            adb pull /sdcard/ui_after.xml ui_after.xml || true
-            cp mock.log mock_after_nav.log
-            python3 ci/purchase_nav.py buy WhatsApp "United States" "Activate Number" || true
+
+            python3 ci/ui_nav.py
+            python3 ci/purchase_nav.py buy WhatsApp "United States" "Activate Number"
             sleep 65
-            adb exec-out screencap -p > screenshot_after_service.png
             adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_act.xml ui_act.xml || true
-            cp mock.log mock_after_service.log
+            adb exec-out screencap -p > screenshot_after_service.png
+
             adb root || true
             sleep 3
             adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_after_activation.bin || true
-            python3 ci/purchase_nav.py coins "Buy Coins >" || true
-            adb exec-out screencap -p > screenshot_coins.png
+
+            python3 ci/purchase_nav.py coins "Buy Coins >"
             adb shell uiautomator dump /sdcard/ui_coins.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_coins.xml ui_coins.xml || true
-            cp mock.log mock_after_coins.log
-            python3 ci/purchase_nav.py buycoins "70 Coins" || true
+            adb exec-out screencap -p > screenshot_coins.png
+
+            python3 ci/purchase_nav.py buycoins "70 Coins"
             sleep 10
-            adb exec-out screencap -p > screenshot_purchase.png
             adb shell uiautomator dump /sdcard/ui_purchase.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_purchase.xml ui_purchase.xml || true
-            cp mock.log mock_after_purchase.log
+            adb exec-out screencap -p > screenshot_purchase.png
             adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_after_purchase.bin || true
-            adb logcat -d > logcat_purchase.txt || true
-            adb shell dumpsys activity activities > activity_purchase.txt || true
-            adb shell pidof com.smart.otp.app.assistant > pid_purchase.txt || true
+
             adb shell am start -W -n com.smart.otp.app.assistant/com.galixo.android.virtualnumber.getcode.MainActivity || true
             sleep 8
-            adb exec-out screencap -p > screenshot_relaunch.png
             adb shell uiautomator dump /sdcard/ui_relaunch.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_relaunch.xml ui_relaunch.xml || true
-            python3 ci/purchase_nav.py refresh "Refresh coins" || true
+            adb exec-out screencap -p > screenshot_relaunch.png
+            python3 ci/purchase_nav.py home Back
+            sleep 3
+            python3 ci/purchase_nav.py refresh "Refresh coins"
             sleep 5
-            adb exec-out screencap -p > screenshot_refresh.png
             adb shell uiautomator dump /sdcard/ui_refresh.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_refresh.xml ui_refresh.xml || true
-            adb root || true
-            sleep 3
+            adb exec-out screencap -p > screenshot_refresh.png
+
             adb shell 'ls -l /data/data/com.smart.otp.app.assistant/files/datastore' > ds_ls.txt || true
             adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_prefs.bin || true
-            cat activity.txt
-            cat pid.txt
+            adb shell dumpsys activity activities | grep mResumedActivity > activity.txt || true
+            adb logcat -d > logcat.txt || true
+
             test -s pid.txt
             grep -q "mResumedActivity.*com.smart.otp.app.assistant" activity.txt
             ! grep -q "FATAL EXCEPTION.*com.smart.otp.app.assistant" logcat.txt
+            python3 ci/assert_e2e.py e2e
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ms-run-artifacts
           path: |
-            screenshot.png
+            screenshot*.png
             logcat.txt
             activity.txt
             pid.txt
             mock.log
-            screenshot_after_nav.png
-            ui_after.xml
-            mock_after_nav.log
-            mock_after_service.log
-            mock_after_coins.log
-            screenshot_after_service.png
-            screenshot_coins.png
-            ui_coins.xml
-            screenshot_purchase.png
-            ui_purchase.xml
-            mock_after_purchase.log
-            logcat_purchase.txt
-            activity_purchase.txt
-            pid_purchase.txt
-            screenshot_relaunch.png
-            ui_relaunch.xml
-            screenshot_refresh.png
-            ui_refresh.xml
-            ds_ls.txt
-            ds_prefs.bin
-            ds_after_activation.bin
-            ds_after_purchase.bin
-            ui_act.xml
             ui_*.xml
+            ds_ls.txt
+            ds_*.bin

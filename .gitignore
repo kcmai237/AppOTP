@@ -5,3 +5,4 @@ tools/
 /build/
 mock/classes/
 mock/dex/
+decompiled/build/

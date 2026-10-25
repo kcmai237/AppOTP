@@ -76,6 +76,7 @@ jobs:
             adb shell dumpsys activity activities | grep mResumedActivity > activity.txt || true
             grep -q "FATAL EXCEPTION" logcat.txt && exit 1 || true
             test -s pid.txt
+            python3 ci/assert_e2e.py coins
 
       - name: Upload artifacts
         if: always()
