@@ -6,3 +6,4 @@ tools/
 mock/classes/
 mock/dex/
 decompiled/build/
+mock/__pycache__/

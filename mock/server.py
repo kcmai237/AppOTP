@@ -130,7 +130,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(200, {
                 "activation_id": activation_id,
                 "refunded_coins": 10,
-                "is_refunded": True,
+                "isRefunded": True,
                 "message": "refunded",
             })
         if path == "/transaction" and method == "GET":
