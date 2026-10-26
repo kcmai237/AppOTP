@@ -70,7 +70,7 @@ jobs:
 
             python3 ci/ui_nav.py
             python3 ci/purchase_nav.py welcome "YAY!" || true
-            python3 ci/purchase_nav.py buy WhatsApp "United States" "Activate Number"
+            python3 ci/purchase_nav.py buy Whatsapp "United States" "Activate Number"
             sleep 65
             adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
             adb pull /sdcard/ui_act.xml ui_act.xml || true
