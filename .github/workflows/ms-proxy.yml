@@ -1,0 +1,127 @@
+name: ms-proxy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -l /dev/kvm || true
+
+      - name: Start real-backend proxy
+        run: |
+          MS_PORT=18942 MS_WALLET=500 MS_FAKE_PRICES=10 nohup python3 mock/proxy.py > proxy.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18942/health; then
+              exit 0
+            fi
+            sleep 0.5
+          done
+          cat proxy.log
+          exit 1
+
+      - name: Validate upstream reads through proxy
+        run: |
+          curl -fsS 'http://127.0.0.1:18942/services?page=1&limit=2' -o services.json
+          python3 -c 'import json; p=json.load(open("services.json")); assert p.get("items"), p; print(p["items"][0]["service_id"], p.get("total"))'
+
+      - name: Boot emulator, install, launch
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          disable-animations: true
+          disk-size: 2048M
+          ram-size: 2048M
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            set -e
+            adb wait-for-device
+            until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+            adb shell input keyevent 82 || true
+            adb shell wm dismiss-keyguard || true
+            adb shell settings put global window_animation_scale 0 || true
+            adb shell settings put global transition_animation_scale 0 || true
+            adb shell settings put global animator_duration_scale 0 || true
+            adb install -r out/app_patched_signed.apk
+            adb logcat -c
+            adb shell am start -W -n com.smart.otp.app.assistant/com.galixo.android.virtualnumber.getcode.MainActivity
+            sleep 30
+            adb exec-out screencap -p > screenshot.png
+            adb shell pidof com.smart.otp.app.assistant > pid.txt || true
+
+            python3 ci/ui_nav.py
+            python3 ci/purchase_nav.py buy WhatsApp "United States" "Activate Number"
+            sleep 65
+            adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_act.xml ui_act.xml || true
+            adb exec-out screencap -p > screenshot_after_service.png
+
+            adb root || true
+            sleep 3
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_after_activation.bin || true
+
+            python3 ci/purchase_nav.py coins "Buy Coins >"
+            adb shell uiautomator dump /sdcard/ui_coins.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_coins.xml ui_coins.xml || true
+            adb exec-out screencap -p > screenshot_coins.png
+
+            python3 ci/purchase_nav.py buycoins "70 Coins"
+            sleep 10
+            adb shell uiautomator dump /sdcard/ui_purchase.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_purchase.xml ui_purchase.xml || true
+            adb exec-out screencap -p > screenshot_purchase.png
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_after_purchase.bin || true
+
+            adb shell am start -W -n com.smart.otp.app.assistant/com.galixo.android.virtualnumber.getcode.MainActivity || true
+            sleep 8
+            adb shell uiautomator dump /sdcard/ui_relaunch.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_relaunch.xml ui_relaunch.xml || true
+            adb exec-out screencap -p > screenshot_relaunch.png
+            python3 ci/purchase_nav.py home Back
+            sleep 3
+            python3 ci/purchase_nav.py refresh "Refresh coins"
+            sleep 5
+            adb shell uiautomator dump /sdcard/ui_refresh.xml >/dev/null 2>&1 || true
+            adb pull /sdcard/ui_refresh.xml ui_refresh.xml || true
+            adb exec-out screencap -p > screenshot_refresh.png
+
+            adb shell 'ls -l /data/data/com.smart.otp.app.assistant/files/datastore' > ds_ls.txt || true
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_prefs.bin || true
+            adb shell dumpsys activity activities | grep mResumedActivity > activity.txt || true
+            adb logcat -d > logcat.txt || true
+
+            test -s pid.txt
+            grep -q "mResumedActivity.*com.smart.otp.app.assistant" activity.txt
+            ! grep -q "FATAL EXCEPTION.*com.smart.otp.app.assistant" logcat.txt
+            python3 ci/assert_e2e.py e2e
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ms-proxy-artifacts
+          path: |
+            screenshot*.png
+            logcat.txt
+            activity.txt
+            pid.txt
+            proxy.log
+            services.json
+            ui_*.xml
+            ds_ls.txt
+            ds_*.bin

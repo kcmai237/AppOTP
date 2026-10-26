@@ -25,6 +25,7 @@ FAKE_SMS_CODE = os.environ.get("MS_SMS_CODE", "123456")
 OTP_POLLS = int(os.environ.get("MS_OTP_POLLS", "1"))
 TEAM = os.environ.get("MS_TEAM", "galixo")
 FORCED_TOKEN = os.environ.get("MS_TOKEN", "").strip()
+FAKE_PRICES = os.environ.get("MS_FAKE_PRICES", "").strip()
 REAL_COINS = os.environ.get("MS_REAL_COINS", "0") == "1"
 
 LOCK = threading.Lock()
@@ -364,6 +365,9 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/coins/rewards/") and path.endswith("/claim") and method == "POST":
             reward_type = path[len("/coins/rewards/"):-len("/claim")].strip("/")
             return self.reply_json(200, claim_reward(reward_type))
+
+        if path == "/services/fetch-prices" and method == "POST" and FAKE_PRICES:
+            return self.reply_json(200, {"max_price": int(FAKE_PRICES)})
 
         if path == "/services/activation" and method == "POST":
             return self.reply_json(200, new_activation(body))
