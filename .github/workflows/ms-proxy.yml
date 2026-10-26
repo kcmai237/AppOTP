@@ -70,6 +70,9 @@ jobs:
 
             python3 ci/ui_nav.py
             python3 ci/purchase_nav.py welcome "YAY!" || true
+            adb root || true
+            sleep 3
+            adb exec-out 'cat /data/data/com.smart.otp.app.assistant/files/datastore/getcode_preferences.preferences_pb' > ds_before_activation.bin || true
             python3 ci/purchase_nav.py buy Whatsapp "United States" "Activate Number"
             sleep 65
             adb shell uiautomator dump /sdcard/ui_act.xml >/dev/null 2>&1 || true
@@ -113,7 +116,7 @@ jobs:
             test -s pid.txt
             grep -q "mResumedActivity.*com.smart.otp.app.assistant" activity.txt
             ! grep -q "FATAL EXCEPTION.*com.smart.otp.app.assistant" logcat.txt
-            python3 ci/assert_e2e.py e2e
+            python3 ci/assert_proxy.py
 
       - uses: actions/upload-artifact@v4
         if: always()
